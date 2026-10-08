@@ -96,7 +96,7 @@ export const useUserStore = defineStore("user", () => {
    * 登出
    */
   async function logout(): Promise<void> {
-    await AuthAPI.logout();
+    AuthAPI.logout().catch(() => {});
     resetAllState();
   }
 
