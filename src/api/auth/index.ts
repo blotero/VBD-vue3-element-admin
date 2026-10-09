@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import { AuthStorage } from "@/utils/auth";
 import type {
   CaptchaInfo,
   LoginRequest,
@@ -47,9 +48,15 @@ const AuthAPI = {
    * 退出登录
    */
   logout() {
+    const refreshToken = AuthStorage.getRefreshToken();
+    if (!refreshToken) {
+      return Promise.resolve();
+    }
+
     return request({
       url: `${AUTH_BASE_URL}/logout`,
       method: "delete",
+      params: { refreshToken },
     });
   },
 
